@@ -20,7 +20,6 @@ const getTokenFrom = request => {
 
 blogsRouter.post('/', async (request, response) => {
     const body = request.body
-    // const user = await User.findById(body.userId)
     const token = getTokenFrom(request)
     const decodedToken = jwt.verify(token, process.env.SECRET)
     if (!token || !decodedToken.id) {
