@@ -11,9 +11,6 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
 
   const blogFormRef = useRef()
 
@@ -62,25 +59,12 @@ const App = () => {
     blogService.create(newBlog)
   }
 
-  const handleAuthorChange = (event) => {
-    setAuthor(event.target.value)
-  }
-  
-  const handleUrlChange = (event) => {
-    setUrl(event.target.value)
-  }
-
   const blogForm = () => {
 
     return (
       <Togglable buttonLabel="Create Blog" ref={blogFormRef}>
           <BlogForm 
             createBlog={createBlog}
-            handleAuthorChange={handleAuthorChange}
-            handleUrlChange={handleUrlChange}
-            title={title}
-            author={author}
-            url={url}
           />
       </Togglable>
     )
