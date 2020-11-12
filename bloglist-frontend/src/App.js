@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import BlogForm from './components/BlogForm'
+import Togglable from './components/Togglable'
 
 const App = () => {
   
@@ -13,7 +14,8 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
-  const [createBlogVisible, setCreateBlogVisible] = useState(false)
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -63,6 +65,7 @@ const App = () => {
       author, 
       url,
     }
+    blogFormRef.current.toggleVisibility()
     blogService.create(newBlog)
     setTitle('')
     setAuthor('')
@@ -82,15 +85,9 @@ const App = () => {
   }
 
   const blogForm = () => {
-    const hideWhenVisible = { display: createBlogVisible ? 'none' : '' }
-    const showWhenVisible = { display: createBlogVisible ? '' : 'none' }
 
     return (
-      <div>
-        <div style={hideWhenVisible}>
-          <button onClick={() => setCreateBlogVisible(true)}>Create Blog</button>
-        </div>
-        <div style={showWhenVisible}>
+      <Togglable buttonLabel="Create Blog" ref={blogFormRef}>
           <BlogForm 
             handleCreateBlog={handleCreateBlog}
             handleTitleChange={handleTitleChange}
@@ -100,12 +97,10 @@ const App = () => {
             author={author}
             url={url}
           />
-          <button onClick={() => setCreateBlogVisible(false)}>cancel</button>
-        </div>
-      </div>
+      </Togglable>
     )
   }
-  
+
   if (user === null) {
     return (
       <div>
