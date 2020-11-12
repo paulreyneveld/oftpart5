@@ -57,23 +57,9 @@ const App = () => {
     setUser(null)
   }
 
-  const handleCreateBlog = (event) => {
-    event.preventDefault()
-    console.log('button clicked')
-    const newBlog = {
-      title, 
-      author, 
-      url,
-    }
+  const createBlog = ( newBlog ) => {
     blogFormRef.current.toggleVisibility()
     blogService.create(newBlog)
-    setTitle('')
-    setAuthor('')
-    setUrl('')
-  }
-
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value)
   }
 
   const handleAuthorChange = (event) => {
@@ -89,8 +75,7 @@ const App = () => {
     return (
       <Togglable buttonLabel="Create Blog" ref={blogFormRef}>
           <BlogForm 
-            handleCreateBlog={handleCreateBlog}
-            handleTitleChange={handleTitleChange}
+            createBlog={createBlog}
             handleAuthorChange={handleAuthorChange}
             handleUrlChange={handleUrlChange}
             title={title}
