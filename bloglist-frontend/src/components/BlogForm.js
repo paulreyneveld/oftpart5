@@ -8,17 +8,20 @@ const BlogForm = ({
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
+    const [likes, setLikes] = useState('')
 
     const addBlog = (event) => {
         event.preventDefault()
         createBlog({
             title,
             author,
-            url
+            url,
+            likes
         })
         setTitle('')
         setAuthor('')
         setUrl('')
+        setLikes('')
     }
     
     return (
@@ -47,6 +50,14 @@ const BlogForm = ({
         value={url}
         name="URL"
         onChange={({ target }) => setUrl(target.value)}
+        />
+        <br />
+        likes:
+        <input 
+        type="text"
+        value={likes}
+        name="Likes"
+        onChange={({ target }) => setLikes(target.value)}
         />
         <br />
         <button type="submit">Create Blog</button>
