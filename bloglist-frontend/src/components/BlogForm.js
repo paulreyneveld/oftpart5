@@ -16,12 +16,10 @@ const BlogForm = ({
             title,
             author,
             url,
-            likes
         })
         setTitle('')
         setAuthor('')
         setUrl('')
-        setLikes('')
     }
     
     return (
@@ -50,14 +48,6 @@ const BlogForm = ({
         value={url}
         name="URL"
         onChange={({ target }) => setUrl(target.value)}
-        />
-        <br />
-        likes:
-        <input 
-        type="text"
-        value={likes}
-        name="Likes"
-        onChange={({ target }) => setLikes(target.value)}
         />
         <br />
         <button type="submit">Create Blog</button>

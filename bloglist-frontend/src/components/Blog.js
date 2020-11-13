@@ -12,9 +12,11 @@ const Blog = ({ blog }) => {
   }
   return (
     <div style={blogStyle}>
-      {blog.title} {blog.author}
+      Title: {blog.title} <br />
+      Author: {blog.author} <br />
       <Togglable showLabel="view" hideLabel="hide">
-        {blog.url} {blog.likes}
+        Url: {blog.url} <br />
+        Likes: {blog.likes} <button>Like</button> <br />
       </Togglable>
     </div>
   )
