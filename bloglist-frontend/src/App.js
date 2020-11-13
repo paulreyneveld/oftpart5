@@ -59,17 +59,6 @@ const App = () => {
     blogService.create(newBlog)
   }
 
-  const blogForm = () => {
-
-    return (
-      <Togglable buttonLabel="Create Blog" ref={blogFormRef}>
-          <BlogForm 
-            createBlog={createBlog}
-          />
-      </Togglable>
-    )
-  }
-
   if (user === null) {
     return (
       <div>
@@ -106,7 +95,11 @@ const App = () => {
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
-      {blogForm()}
+      <Togglable showLabel="Create Blog" hideLabel="cancel" ref={blogFormRef}>
+          <BlogForm 
+            createBlog={createBlog}
+          />
+      </Togglable>
       <button onClick={handleLogout}>Logout</button>
     </div>
   )
