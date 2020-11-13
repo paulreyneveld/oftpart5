@@ -8,7 +8,6 @@ const BlogForm = ({
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
-    const [likes, setLikes] = useState('')
 
     const addBlog = (event) => {
         event.preventDefault()
