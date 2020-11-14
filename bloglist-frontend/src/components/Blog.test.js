@@ -1,9 +1,9 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import { render } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import Blog from './Blog'
 
-test('renders content', () => {
+test('renders content in hide mode', () => {
   const blog = {
     title: "test",
     author: "hello",
@@ -11,15 +11,13 @@ test('renders content', () => {
     likes: 123
   }
 
-  const component = render(
+    const component = render(
     <Blog blog={blog} />
-  )
+    )
 
   expect(component.container).toHaveTextContent(
     'test'
   )
-
-  component.debug()
 
   const span1 = component.container.querySelector('.title')
   expect(span1).toHaveTextContent('test')
@@ -34,3 +32,33 @@ test('renders content', () => {
   expect(span4).not.toBeVisible()
 
 })
+
+test('render content in show mode', () => {
+    const blog = {
+        title: "test",
+        author: "hello",
+        url: "test.com",
+        likes: 123
+    }
+  
+    const mockHandler = jest.fn()
+
+    const component = render(
+        <Blog blog={blog} />
+      )
+  
+    const button = component.getByText('view')
+    fireEvent.click(button)
+  
+    const span1 = component.container.querySelector('.title')
+    expect(span1).toHaveTextContent('test')
+  
+    const span2 = component.container.querySelector('.author')
+    expect(span2).toHaveTextContent('hello')
+  
+    const span3 = component.container.querySelector('.url')
+    expect(span3).toBeVisible()
+  
+    const span4 = component.container.querySelector('.likes')
+    expect(span4).toBeVisible()
+  })
