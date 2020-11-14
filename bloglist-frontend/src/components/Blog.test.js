@@ -41,8 +41,6 @@ test('render content in show mode', () => {
         likes: 123
     }
   
-    const mockHandler = jest.fn()
-
     const component = render(
         <Blog blog={blog} />
       )
@@ -61,4 +59,28 @@ test('render content in show mode', () => {
   
     const span4 = component.container.querySelector('.likes')
     expect(span4).toBeVisible()
+  })
+
+  test('clicking the button calls event handler twice', () => {
+    const blog = {
+        title: "test",
+        author: "hello",
+        url: "test.com",
+        likes: 123
+    }
+  
+    const mockHandler = jest.fn()
+  
+    const component = render(
+        <Blog blog={blog} updateBlogLikes={mockHandler} />
+    )
+  
+    const viewButton = component.getByText('view')
+    fireEvent.click(viewButton)
+    const button = component.getByText('Like')
+    fireEvent.click(button)
+    fireEvent.click(button)
+
+  
+    expect(mockHandler.mock.calls).toHaveLength(2)
   })
