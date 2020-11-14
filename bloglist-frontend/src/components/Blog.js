@@ -25,12 +25,12 @@ const Blog = ({ blog, updateBlogLikes }) => {
   }
 
   return (
-    <div style={blogStyle}>
-      Title: {blog.title} <br />
-      Author: {blog.author} <br />
+    <div className="blog" style={blogStyle}>
+      <span className="title">Title: {blog.title}</span> <br />
+      <span className="author">Author: {blog.author}</span> <br />
       <Togglable showLabel="view" hideLabel="hide">
-        Url: {blog.url} <br />
-        Likes: {blog.likes} <button onClick={addLikes}>Like</button> <br />
+        <span className="url">Url: {blog.url}</span> <br />
+       <span className="likes"> Likes: {blog.likes} <button onClick={addLikes}>Like</button></span> <br />
       </Togglable>
     </div>
   )
