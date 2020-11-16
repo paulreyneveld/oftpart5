@@ -39,13 +39,18 @@ describe('Blog app', function() {
       cy.get('#login-button').click()
     })
 
-    it('A blog can be created', function() {
-      cy.get('#create-blog').click()
+    it('A blog can be created and liked', function() {
+      cy.get('#show').click()
       cy.get('#title').type('new blog')
       cy.get('#author').type('Paolo')
       cy.get('#url').type('test.com')
       cy.get('#submit-new-blog').click()
       cy.contains('new blog')
+      cy.get('#show').click()
+      cy.get('#like').click()
+      cy.get('#like').click()
+
+      cy.contains('1')
     })
   })
 })

@@ -30,7 +30,7 @@ const Blog = ({ blog, updateBlogLikes }) => {
       <span className="author">Author: {blog.author}</span> <br />
       <Togglable showLabel="view" hideLabel="hide">
         <span className="url">Url: {blog.url}</span> <br />
-       <span className="likes"> Likes: {blog.likes} <button onClick={addLikes}>Like</button></span> <br />
+       <span className="likes"> Likes: {blog.likes} <button id="like" onClick={addLikes}>Like</button></span> <br />
       </Togglable>
     </div>
   )
