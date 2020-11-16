@@ -31,4 +31,21 @@ describe('Blog app', function() {
   
     })
   })
+
+  describe.only('When logged in', function() {
+    beforeEach(function() {
+      cy.get('#username').type('paolov')
+      cy.get('#password').type('test')
+      cy.get('#login-button').click()
+    })
+
+    it('A blog can be created', function() {
+      cy.get('#create-blog').click()
+      cy.get('#title').type('new blog')
+      cy.get('#author').type('Paolo')
+      cy.get('#url').type('test.com')
+      cy.get('#submit-new-blog').click()
+      cy.contains('new blog')
+    })
+  })
 })

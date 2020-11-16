@@ -18,7 +18,7 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )  
-  }, [])  // Using blogs's state to rerender leads to an infinite xhr request?
+  }, [ blogs ])  // Using blogs's state to rerender leads to an infinite xhr request?
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
