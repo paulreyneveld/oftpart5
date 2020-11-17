@@ -14,11 +14,14 @@ const App = () => {
 
   const blogFormRef = useRef()
 
-  useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
-  }, [ blogs ])  // Using blogs's state to rerender leads to an infinite xhr request?
+  const abstract = 'nothing'
+  const abstract1 = () => { blogService.getAll().then(blogs =>
+    setBlogs(blogs)
+  ) }
+
+  useEffect(
+    abstract1
+  , [])  // Using blogs's state to rerender leads to an infinite xhr request?
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -56,11 +59,11 @@ const App = () => {
 
   const createBlog = ( newBlog ) => {
     blogFormRef.current.toggleVisibility()
-    blogService.create(newBlog)
+    blogService.create(setBlogs(blogs.concat(newBlog))) // This is the problem. This is where the xhr request was infinitely generated. 
   }
 
   const updateBlogLikes = ( newBlog ) => {
-    blogService.updateLikes(newBlog)
+    blogService.updateLikes(setBlogs(blogs.concat(newBlog)))
   }
 
   if (user === null) {
