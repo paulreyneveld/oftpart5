@@ -56,27 +56,25 @@ const App = () => {
     setUser(null)
   }
 
-  const createBlog = ( newBlog ) => {
+  const createBlog = async ( newBlog ) => {
     blogFormRef.current.toggleVisibility()
-    blogService.create(newBlog)
-      .then(response => {
-        console.log(response.id)
-        newBlog.id = response.id
-        setBlogs(blogs.concat(newBlog))
-      })
-    
+    let response = await blogService.create(newBlog)
+    newBlog.id = response.id
+    setBlogs(blogs.concat(newBlog))
   }
 
-  const deleteBlog = ( id ) => {
-    // I have to write some code to remove the deleted blog from the React state
+  const deleteBlog = async ( id ) => {
     setBlogs(blogs.filter(blog => blog.id !== id))
-    blogService.removeBlog(id)
+    await blogService.removeBlog(id)
   }
 
   const updateBlogLikes = ( newBlog ) => {
     // I should review how this was handled in the OFS notes app
     // setBlogs(blogs.filter(blog => blog.likes === newBlog.likes))
     blogService.updateLikes(newBlog)
+      .then(response => {
+        console.log(response)
+      })
   }
 
   if (user === null) {
