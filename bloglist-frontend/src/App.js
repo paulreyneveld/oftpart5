@@ -11,16 +11,15 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-
+  
   const blogFormRef = useRef()
 
-  const abstract = 'nothing'
-  const abstract1 = () => { blogService.getAll().then(blogs =>
+  const dbHook = () => { blogService.getAll().then(blogs =>
     setBlogs(blogs)
   ) }
 
   useEffect(
-    abstract1
+    dbHook
   , [])  // Using blogs's state to rerender leads to an infinite xhr request?
 
   useEffect(() => {
@@ -59,11 +58,25 @@ const App = () => {
 
   const createBlog = ( newBlog ) => {
     blogFormRef.current.toggleVisibility()
-    blogService.create(setBlogs(blogs.concat(newBlog))) // This is the problem. This is where the xhr request was infinitely generated. 
+    blogService.create(newBlog)
+      .then(response => {
+        console.log(response.id)
+        newBlog.id = response.id
+        setBlogs(blogs.concat(newBlog))
+      })
+    
+  }
+
+  const deleteBlog = ( id ) => {
+    // I have to write some code to remove the deleted blog from the React state
+    setBlogs(blogs.filter(blog => blog.id !== id))
+    blogService.removeBlog(id)
   }
 
   const updateBlogLikes = ( newBlog ) => {
-    blogService.updateLikes(setBlogs(blogs.concat(newBlog)))
+    // I should review how this was handled in the OFS notes app
+    // setBlogs(blogs.filter(blog => blog.likes === newBlog.likes))
+    blogService.updateLikes(newBlog)
   }
 
   if (user === null) {
@@ -102,7 +115,7 @@ const App = () => {
       <h2>blogs</h2>
       <p>{user.name} is logged in</p>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} updateBlogLikes={updateBlogLikes} />
+        <Blog key={blog.id} blog={blog} updateBlogLikes={updateBlogLikes} deleteBlog={deleteBlog} />
       )}
       <Togglable showLabel="Create Blog" hideLabel="cancel" ref={blogFormRef}>
           <BlogForm 
