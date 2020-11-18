@@ -69,7 +69,7 @@ const App = () => {
   }
 
   const updateBlogLikes = async ( newBlog ) => {
-    const response = await blogService.updateLikes(newBlog)
+    await blogService.updateLikes(newBlog)
     // Line 74 kind of melts my brain. 
     setBlogs(blogs.map(blog => 
       blog.id === newBlog.id  

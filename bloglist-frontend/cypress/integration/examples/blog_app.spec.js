@@ -28,11 +28,12 @@ describe('Blog app', function() {
       cy.get('#username').type('nonuser')
       cy.get('#password').type('test')
       cy.get('#login-button').click()
+      cy.contains('Log in')
   
     })
   })
 
-  describe.only('When logged in', function() {
+  describe('When logged in', function() {
     beforeEach(function() {
       cy.get('#username').type('paolov')
       cy.get('#password').type('test')
@@ -48,9 +49,29 @@ describe('Blog app', function() {
       cy.contains('new blog')
       cy.get('#show').click()
       cy.get('#like').click()
-      cy.get('#like').click()
 
       cy.contains('1')
     })
   })
+
+
+  describe('When logged in', function() {
+    beforeEach(function() {
+      cy.get('#username').type('paolov')
+      cy.get('#password').type('test')
+      cy.get('#login-button').click()
+    })
+    it('A blog can be deleted', function() {
+      cy.get('#show').click()
+      cy.get('#title').type('new blog')
+      cy.get('#author').type('Paolo')
+      cy.get('#url').type('test.com')
+      cy.get('#submit-new-blog').click()
+      cy.contains('new blog')
+      cy.get('#show').click()
+      cy.get('#remove').click()
+      cy.contains('new blog').should('not.exist')
+    })
+  })
+
 })
