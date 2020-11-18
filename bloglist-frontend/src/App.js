@@ -68,13 +68,14 @@ const App = () => {
     await blogService.removeBlog(id)
   }
 
-  const updateBlogLikes = ( newBlog ) => {
-    // I should review how this was handled in the OFS notes app
-    // setBlogs(blogs.filter(blog => blog.likes === newBlog.likes))
-    blogService.updateLikes(newBlog)
-      .then(response => {
-        console.log(response)
-      })
+  const updateBlogLikes = async ( newBlog ) => {
+    const response = await blogService.updateLikes(newBlog)
+    // Line 74 kind of melts my brain. 
+    setBlogs(blogs.map(blog => 
+      blog.id === newBlog.id  
+      ? {...blog, likes : newBlog.likes} 
+      : blog 
+    ))
   }
 
   if (user === null) {
