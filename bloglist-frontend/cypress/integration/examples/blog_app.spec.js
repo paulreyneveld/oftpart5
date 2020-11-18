@@ -74,4 +74,35 @@ describe('Blog app', function() {
     })
   })
 
+  describe.only('When logged in', function() {
+
+    beforeEach(function() {
+      cy.get('#username').type('paolov')
+      cy.get('#password').type('test')
+      cy.get('#login-button').click()
+    })
+
+    it('sorted by likes', function() {
+      cy.get('#show').click()
+      cy.get('#title').type('new blog')
+      cy.get('#author').type('Paolo')
+      cy.get('#url').type('test.com')
+      cy.get('#submit-new-blog').click()
+      cy.get('#show').click()
+
+      cy.get('#like').click()
+
+      cy.get('#show').click()
+      cy.get('#title').type('Another new blog')
+      cy.get('#author').type('Paolo')
+      cy.get('#url').type('test.com')
+      cy.get('#submit-new-blog').click()
+      cy.get('#show').click()
+
+      cy.get('#like').click()
+      cy.get('#like').click()
+      cy.get('#like').click()
+    })
+  })
+
 })
