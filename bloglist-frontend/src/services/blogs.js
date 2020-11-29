@@ -31,7 +31,7 @@ const removeBlog = async (id) => {
 
 const updateLikes = async (newObject) => {
   const config = {
-    headers: {Authorization: token },
+    headers: { Authorization: token },
   }
 
   const response = await axios.put(`${baseUrl}/${newObject.id}`, newObject, config)
